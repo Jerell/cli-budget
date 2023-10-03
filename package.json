@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/local-auth": "2.1.0",
     "bun-promptx": "^0.2.0",
+    "date-fns": "^2.30.0",
     "googleapis": "105"
   }
 }
