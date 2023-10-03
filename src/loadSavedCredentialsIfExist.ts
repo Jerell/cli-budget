@@ -1,5 +1,5 @@
-const { google } = require("googleapis");
-import { fs, TOKEN_PATH } from ".";
+import { google } from "googleapis";
+import { TOKEN_PATH } from ".";
 
 /**
  * Reads previously authorized credentials from the save file.
@@ -9,8 +9,8 @@ import { fs, TOKEN_PATH } from ".";
 
 export async function loadSavedCredentialsIfExist() {
   try {
-    const content = await fs.readFile(TOKEN_PATH);
-    const credentials = JSON.parse(content);
+    const content = Bun.file(TOKEN_PATH);
+    const credentials = await content.json();
     return google.auth.fromJSON(credentials);
   } catch (err) {
     return null;

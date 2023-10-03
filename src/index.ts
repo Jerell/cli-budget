@@ -1,17 +1,16 @@
 import { authorize } from "./authorize";
-
-export const fs = require("fs").promises;
-const path = require("path");
-const process = require("process");
-const { google } = require("googleapis");
+import { google } from "googleapis";
+import pathTag from "./pathTag";
 
 // If modifying these scopes, delete token.json.
 export const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-export const TOKEN_PATH = path.join(process.cwd(), "token.json");
-export const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
+export const TOKEN_PATH = pathTag`token.json`;
+export const CREDENTIALS_PATH = pathTag`credentials.json`;
+
+async function listCalendars() {}
 
 /**
  * Lists the next 10 events on the user's primary calendar.
@@ -19,6 +18,9 @@ export const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
  */
 async function listEvents(auth: any) {
   const calendar = google.calendar({ version: "v3", auth });
+  const r = await calendar.calendarList.list();
+  console.log(r);
+
   const res = await calendar.events.list({
     calendarId: "primary",
     timeMin: new Date().toISOString(),
@@ -32,12 +34,10 @@ async function listEvents(auth: any) {
     return;
   }
   console.log("Upcoming 10 events:");
-  events.map(
-    (event: { start: { dateTime: any; date: any }; summary: any }, i: any) => {
-      const start = event.start.dateTime || event.start.date;
-      console.log(`${start} - ${event.summary}`);
-    }
-  );
+  events.map((event: any, i: any) => {
+    const start = event.start.dateTime || event.start.date;
+    console.log(`${start} - ${event.summary}`);
+  });
 }
 
 authorize().then(listEvents).catch(console.error);

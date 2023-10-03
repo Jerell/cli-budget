@@ -1,4 +1,4 @@
-import { fs, CREDENTIALS_PATH, TOKEN_PATH } from ".";
+import { CREDENTIALS_PATH, TOKEN_PATH } from ".";
 
 /**
  * Serializes credentials to a file compatible with GoogleAUth.fromJSON.
@@ -8,8 +8,8 @@ import { fs, CREDENTIALS_PATH, TOKEN_PATH } from ".";
  */
 
 export async function saveCredentials(client: any) {
-  const content = await fs.readFile(CREDENTIALS_PATH);
-  const keys = JSON.parse(content);
+  const content = Bun.file(CREDENTIALS_PATH);
+  const keys = await content.json();
   const key = keys.installed || keys.web;
   const payload = JSON.stringify({
     type: "authorized_user",
@@ -17,5 +17,5 @@ export async function saveCredentials(client: any) {
     client_secret: key.client_secret,
     refresh_token: client.credentials.refresh_token,
   });
-  await fs.writeFile(TOKEN_PATH, payload);
+  await Bun.write(TOKEN_PATH, payload);
 }
