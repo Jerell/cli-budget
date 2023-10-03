@@ -26,7 +26,7 @@ export async function listCalendars(calendar: calendar_v3.Calendar) {
   });
 }
 
-async function listEvents(auth: any) {
+async function process(auth: any) {
   const calendar = google.calendar({ version: "v3", auth });
   const cal = await selectCalendar(calendar);
 
@@ -37,4 +37,4 @@ async function listEvents(auth: any) {
   });
 }
 
-authorize().then(listEvents).catch(console.error);
+authorize().then(process).catch(console.error);
