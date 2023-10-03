@@ -1,7 +1,7 @@
 import { calendar_v3 } from "googleapis";
 import { createSelection } from "bun-promptx";
-import { cutoffText } from "./cutoffText";
-import { listCalendars } from ".";
+import { cutoffText } from "../cutoffText";
+import { listCalendars } from "../..";
 
 export async function selectCalendar(calendar: calendar_v3.Calendar) {
   const calendars = await listCalendars(calendar);

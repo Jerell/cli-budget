@@ -1,4 +1,4 @@
-import { CREDENTIALS_PATH, TOKEN_PATH } from ".";
+import { CREDENTIALS_PATH, TOKEN_PATH } from "../..";
 
 /**
  * Serializes credentials to a file compatible with GoogleAUth.fromJSON.

@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import { TOKEN_PATH } from ".";
+import { TOKEN_PATH } from "../..";
 
 /**
  * Reads previously authorized credentials from the save file.

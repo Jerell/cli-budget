@@ -1,8 +1,8 @@
-import { authorize } from "./authorize";
+import { authorize } from "./lib/auth/authorize";
 import { calendar_v3, google } from "googleapis";
-import pathTag from "./pathTag";
-import { selectCalendar } from "./selectCalendar";
-import { getCalendarEvents } from "./getCalendarEvents";
+import pathTag from "./lib/pathTag";
+import { selectCalendar } from "./lib/calendar/selectCalendar";
+import { getCalendarEvents } from "./lib/calendar/getCalendarEvents";
 
 export const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 

@@ -1,5 +1,5 @@
 const { authenticate } = require("@google-cloud/local-auth");
-import { SCOPES, CREDENTIALS_PATH } from ".";
+import { SCOPES, CREDENTIALS_PATH } from "../..";
 import { loadSavedCredentialsIfExist } from "./loadSavedCredentialsIfExist";
 import { saveCredentials } from "./saveCredentials";
 
@@ -16,7 +16,7 @@ export async function authorize() {
     scopes: SCOPES,
     keyfilePath: CREDENTIALS_PATH,
   });
-  if (client.credentials) {
+  if (client?.credentials) {
     await saveCredentials(client);
   }
   return client;
