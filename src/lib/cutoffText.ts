@@ -1,2 +1,2 @@
-export const cutoffText = (t: string, limit = 25) =>
-  t.length <= limit ? t : t.slice(0, limit - 1) + "...";
+export const cutoffText = (t: string, chars = 25) =>
+  t.length <= chars ? t : t.slice(0, chars) + "...";
