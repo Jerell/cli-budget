@@ -3,7 +3,9 @@ import { calendar_v3, google } from "googleapis";
 import pathTag from "./lib/pathTag";
 import { selectCalendar } from "./lib/calendar/selectCalendar";
 import { getCalendarEvents } from "./lib/calendar/getCalendarEvents";
-import parseTransactionString from "./lib/parseCurrency";
+import { enterDate } from "./lib/enterDate";
+import { addYears } from "date-fns";
+import processEvents from "./lib/calendar/processEvents";
 
 export const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
@@ -27,20 +29,16 @@ export async function listCalendars(calendar: calendar_v3.Calendar) {
   });
 }
 
-async function process(auth: any) {
+async function run(auth: any) {
   const calendar = google.calendar({ version: "v3", auth });
   const cal = await selectCalendar(calendar);
 
-  const events = await getCalendarEvents(calendar, cal.id);
-  events.map((event) => {
-    const start = event.start?.dateTime || event.start?.date;
+  const start = enterDate("Enter start date: ");
+  const end = enterDate("Enter end date: ", addYears(start, 1));
 
-    if (event.summary) {
-      console.log(
-        `${start} - ${event.summary} ${parseTransactionString(event.summary)}`
-      );
-    }
-  });
+  const events = await getCalendarEvents(calendar, cal.id, start, end);
+  const acc = processEvents(events);
+  console.log(acc);
 }
 
-authorize().then(process).catch(console.error);
+authorize().then(run).catch(console.error);
