@@ -7,5 +7,9 @@ export default function parseTransactionString(text: string) {
   if (!matches) return null;
 
   const sign = matches[0].includes("+") ? 1 : -1;
-  return [sign * Number(matches[1]), matches[matches.length - 1]];
+
+  return {
+    value: sign * Number(matches[1]),
+    label: matches[matches.length - 1],
+  };
 }

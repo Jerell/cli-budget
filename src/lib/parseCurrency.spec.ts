@@ -10,6 +10,7 @@ describe("parseCurrency", () => {
   ];
 
   test.each(cases)("%s", (text, [n, label]) => {
-    expect(parseTransactionString(text)).toStrictEqual([n, label]);
+    const { value, label: l } = parseTransactionString(text)!;
+    expect([value, l]).toStrictEqual([n, label]);
   });
 });

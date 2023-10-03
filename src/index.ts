@@ -3,6 +3,7 @@ import { calendar_v3, google } from "googleapis";
 import pathTag from "./lib/pathTag";
 import { selectCalendar } from "./lib/calendar/selectCalendar";
 import { getCalendarEvents } from "./lib/calendar/getCalendarEvents";
+import parseTransactionString from "./lib/parseCurrency";
 
 export const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
@@ -33,7 +34,12 @@ async function process(auth: any) {
   const events = await getCalendarEvents(calendar, cal.id);
   events.map((event) => {
     const start = event.start?.dateTime || event.start?.date;
-    console.log(`${start} - ${event.summary}`);
+
+    if (event.summary) {
+      console.log(
+        `${start} - ${event.summary} ${parseTransactionString(event.summary)}`
+      );
+    }
   });
 }
 
