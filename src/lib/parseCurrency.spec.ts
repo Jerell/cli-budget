@@ -1,15 +1,15 @@
 import { expect, test, describe } from "bun:test";
-import parseCurrency from "./parseCurrency";
+import parseTransactionString from "./parseCurrency";
 
 describe("parseCurrency", () => {
-  const cases: [string, number][] = [
-    ["[+£100.00] income", 100],
-    ["[+£105.43] income", 105.43],
-    ["[£10.00] expense", -10],
-    ["[£1] arbitrary text", -1],
+  const cases: [string, [number, string]][] = [
+    ["[+£100.00] income", [100, "income"]],
+    ["[+£105.43] income", [105.43, "income"]],
+    ["[£10.00] expense", [-10, "expense"]],
+    ["[£1] arbitrary text", [-1, "arbitrary text"]],
   ];
 
-  test.each(cases)("%s -> %d", (text, expected) => {
-    expect(parseCurrency(text)).toBe(expected);
+  test.each(cases)("%s", (text, [n, label]) => {
+    expect(parseTransactionString(text)).toStrictEqual([n, label]);
   });
 });
