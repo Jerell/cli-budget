@@ -1,5 +1,7 @@
 # cli-budget
 
+![demo](./demo.mp4)
+
 To install dependencies:
 
 ```bash
