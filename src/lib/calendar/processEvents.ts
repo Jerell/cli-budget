@@ -1,11 +1,7 @@
 import { calendar_v3 } from "googleapis";
 import { TimeSeries } from "../TimeSeries";
 import parseTransactionString from "../parseCurrency";
-
-export interface TimeSeriesAccumulator {
-  all: TimeSeries;
-  [label: string]: TimeSeries;
-}
+import { TimeSeriesAccumulator } from "../TimeSeriesAccumulator";
 
 type e = Pick<calendar_v3.Schema$Event, "start" | "summary">;
 

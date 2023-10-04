@@ -6,6 +6,8 @@ import { getCalendarEvents } from "./lib/calendar/getCalendarEvents";
 import { enterDate } from "./lib/enterDate";
 import { addYears } from "date-fns";
 import processEvents from "./lib/calendar/processEvents";
+import displayTimeSeries from "./lib/displayTimeSeries";
+import { selectByKey } from "./lib/TimeSeriesAccumulator";
 
 export const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
@@ -32,13 +34,27 @@ export async function listCalendars(calendar: calendar_v3.Calendar) {
 async function run(auth: any) {
   const calendar = google.calendar({ version: "v3", auth });
   const cal = await selectCalendar(calendar);
+  if (!cal) return;
 
   const start = enterDate("Enter start date: ");
   const end = enterDate("Enter end date: ", addYears(start, 1));
 
   const events = await getCalendarEvents(calendar, cal.id, start, end);
   const acc = processEvents(events);
-  console.log(acc);
+
+  let repeat = true;
+  const exit = () => {
+    repeat = false;
+    return undefined;
+  };
+  while (repeat) {
+    const selection = selectByKey(acc, exit);
+    if (selection === undefined) {
+      return;
+    }
+    const [tag, item] = selection;
+    displayTimeSeries(tag, item);
+  }
 }
 
 authorize().then(run).catch(console.error);
