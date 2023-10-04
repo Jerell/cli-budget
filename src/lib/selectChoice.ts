@@ -13,8 +13,7 @@ export function selectChoice(
     options
   );
 
-  if (selectedIndex === null) throw new Error("selection index is null");
-  if (selectedIndex >= choices.length) {
+  if (selectedIndex === null || selectedIndex >= choices.length) {
     return exit();
   }
 
