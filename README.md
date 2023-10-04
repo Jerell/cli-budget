@@ -1,5 +1,7 @@
 # cli-budget
 
+![calendar](calendar.png)
+
 ![demo](demo.gif)
 
 To install dependencies:
