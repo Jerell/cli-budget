@@ -1,6 +1,6 @@
 # cli-budget
 
-![demo](./demo.mp4)
+![demo](./demo.mov)
 
 To install dependencies:
 
