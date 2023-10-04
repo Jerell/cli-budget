@@ -25,6 +25,7 @@ Follow the steps outlined [here](https://developers.google.com/calendar/api/quic
 1. Create a Google Cloud project.
 2. Enable the Google Calendar API
 3. Configure OAuth: You want the `calendar.readonly` scope.
+4. Put the credentials.json file in this folder
 
 ### Google Calendar events
 
